@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:oauth2_client/access_token_response.dart';
 import 'package:oauth2_client/src/secure_storage.dart';
 import 'package:oauth2_client/src/storage.dart';
@@ -8,14 +9,12 @@ class TokenStorage {
 
   Storage storage;
 
-  TokenStorage(this.key, {this.storage}) {
-    storage ??= SecureStorage();
-  }
+  TokenStorage(this.key, {storage}) : storage = storage ?? SecureStorage();
 
   /// Looks for a token in the storage that matches the required [scopes].
   /// If a token in the storage has been generated for a superset of the requested scopes, it is considered valid.
-  Future<AccessTokenResponse> getToken(List<String> scopes) async {
-    AccessTokenResponse tknResp;
+  Future<AccessTokenResponse?> getToken(List<String>? scopes) async {
+    AccessTokenResponse? tknResp;
 
     final serializedStoredTokens = await storage.read(key);
 
@@ -70,7 +69,7 @@ class TokenStorage {
     return tokens;
   }
 
-  Future<bool> deleteToken(List<String> scopes) async {
+  Future<bool> deleteToken(List<String>? scopes) async {
     final serTokens = await storage.read(key);
 
     if (serTokens != null) {
@@ -86,12 +85,12 @@ class TokenStorage {
     return true;
   }
 
-  List clearScopes(List<String> scopes) {
-    return scopes?.where((element) => element.trim().isNotEmpty)?.toList();
+  List<String>? clearScopes(List<String>? scopes) {
+    return scopes?.where((element) => element.trim().isNotEmpty).toList();
   }
 
-  List getSortedScopes(List<String> scopes) {
-    var sortedScopes = [];
+  List<String> getSortedScopes(List<String>? scopes) {
+    var sortedScopes = <String>[];
 
     var cleanScopes = clearScopes(scopes);
 
@@ -103,7 +102,7 @@ class TokenStorage {
     return sortedScopes;
   }
 
-  String getScopeKey(List<String> scope) {
+  String getScopeKey(List<String>? scope) {
     var key = '_default_';
 
     var sortedScopes = getSortedScopes(scope);

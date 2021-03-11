@@ -5,18 +5,15 @@ import 'package:http/http.dart' as http;
 /// Represents the base response for the OAuth 2 requests.
 /// see https://tools.ietf.org/html/rfc6749#section-5.2
 class OAuth2Response {
-  String error;
-  String errorDescription;
-  String errorUri;
+  String? error;
+  String? errorDescription;
+  String? errorUri;
   int httpStatusCode;
 
-  OAuth2Response() {
-    httpStatusCode = 200;
-  }
+  OAuth2Response() : httpStatusCode = 200;
 
-  OAuth2Response.fromMap(Map<String, dynamic> map) {
-    httpStatusCode = map['http_status_code'];
-
+  OAuth2Response.fromMap(Map<String, dynamic> map)
+      : httpStatusCode = map['http_status_code'] {
     if (map.containsKey('error') && map['error'] != null) {
       error = map['error'];
       errorDescription = map.containsKey('error_description')
@@ -55,7 +52,7 @@ class OAuth2Response {
 
   ///Checks if the access token request returned a valid status code
   bool isValid() {
-    return httpStatusCode == 200 && (error == null || error.isEmpty);
+    return httpStatusCode == 200 && (error == null || error!.isEmpty);
   }
 
   @override

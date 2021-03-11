@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:oauth2_client/access_token_response.dart';
-import 'package:oauth2_client/src/storage.dart';
 import 'package:oauth2_client/src/secure_storage.dart';
+import 'package:oauth2_client/src/storage.dart';
 import 'package:oauth2_client/src/token_storage.dart';
 
 class SecureStorageMock extends Mock implements SecureStorage {}
@@ -53,7 +53,7 @@ void main() {
 
       var tknResp = await storage.getToken(['scope1']);
 
-      expect(tknResp.isValid(), true);
+      expect(tknResp?.isValid(), true);
     });
 
     test('Get token with a subset of scopes (1)', () async {
@@ -75,7 +75,7 @@ void main() {
           .thenAnswer((_) async => jsonEncode(tokens));
 
       var tknResp = await storage.getToken(['scope1']);
-      expect(tknResp.isValid(), true);
+      expect(tknResp?.isValid(), true);
     });
 
     test('Get token with a subset of scopes (2)', () async {
@@ -97,7 +97,7 @@ void main() {
           .thenAnswer((_) async => jsonEncode(tokens));
 
       var tknResp2 = await storage.getToken(['scope2']);
-      expect(tknResp2.isValid(), true);
+      expect(tknResp2?.isValid(), true);
     });
 
     test('Get token with a subset of scopes (3)', () async {
@@ -119,7 +119,7 @@ void main() {
           .thenAnswer((_) async => jsonEncode(tokens));
 
       var tknResp3 = await storage.getToken(['scope1', 'scope2']);
-      expect(tknResp3.isValid(), true);
+      expect(tknResp3?.isValid(), true);
     });
 
     test('Get token with a subset of scopes (4)', () async {
@@ -141,7 +141,7 @@ void main() {
           .thenAnswer((_) async => jsonEncode(tokens));
 
       var tknResp4 = await storage.getToken(['scope2', 'scope1']);
-      expect(tknResp4.isValid(), true);
+      expect(tknResp4?.isValid(), true);
     });
 
     test('Get token with a subset of scopes (5)', () async {
@@ -232,7 +232,7 @@ void main() {
           .thenAnswer((_) async => jsonEncode(tokens));
 
       var tknResp = await storage.getToken(null);
-      expect(tknResp.isValid(), true);
+      expect(tknResp?.isValid(), true);
     });
 
     test('Get token with a subset of scopes (8)', () async {
@@ -254,7 +254,7 @@ void main() {
           .thenAnswer((_) async => jsonEncode(tokens));
 
       var tknResp = await storage.getToken(null);
-      expect(tknResp.isValid(), true);
+      expect(tknResp?.isValid(), true);
     });
 
     test('Insert token', () async {
