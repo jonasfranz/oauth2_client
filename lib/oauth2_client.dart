@@ -365,7 +365,8 @@ class OAuth2Client {
       headers.addAll(authHeaders);
     }
 
-    var response = await httpClient.post(url, body: params, headers: headers);
+    var response =
+        await httpClient.post(Uri.parse(url), body: params, headers: headers);
 
     return response;
   }
